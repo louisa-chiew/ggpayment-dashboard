@@ -1,45 +1,92 @@
+
 import { useState } from "react";
-import DashboardFilters from "@/components/DashboardFilters";
-import DashboardStats from "@/components/DashboardStats";
-import PaymentMethodBreakdown from "@/components/PaymentMethodBreakdown";
-import AcceptanceRates from "@/components/AcceptanceRates";
-import ConversionFunnel from "@/components/ConversionFunnel";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import GlobalFilters from "@/components/layout/GlobalFilters";
+import KPIScoreCards from "@/components/executive/KPIScoreCards";
+import PerformanceTrends from "@/components/executive/PerformanceTrends";
+import PaymentMethodPopularity from "@/components/executive/PaymentMethodPopularity";
+import TopDeclineReasons from "@/components/executive/TopDeclineReasons";
+import PerformanceMatrix from "@/components/performance/PerformanceMatrix";
 import { BarChart3 } from "lucide-react";
 
 const Index = () => {
+  // Global filter states
   const [selectedTimeRange, setSelectedTimeRange] = useState("30d");
-  const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("All");
+  const [selectedUserJourney, setSelectedUserJourney] = useState("all");
+  const [selectedCountries, setSelectedCountries] = useState(["all"]);
+  const [compareWithPrevious, setCompareWithPrevious] = useState(false);
 
   return (
     <div className="min-h-screen bg-dashboard-bg">
-      <div className="container mx-auto px-4 py-8">
-        <div className="mb-8">
+      <div className="container mx-auto px-4 py-6">
+        {/* Header */}
+        <div className="mb-6">
           <div className="flex items-center gap-3 mb-2">
             <BarChart3 className="w-8 h-8 text-primary" />
-            <h1 className="text-3xl font-bold text-foreground">Payment Dashboard</h1>
+            <h1 className="text-3xl font-bold text-foreground">Payment Analytics Dashboard</h1>
           </div>
           <p className="text-muted-foreground">
-            Monitor payment performance, acceptance rates, and conversion funnels
+            Comprehensive payment performance analytics and insights
           </p>
         </div>
 
-        <div className="space-y-6">
-          <DashboardFilters
+        {/* Global Filters */}
+        <div className="mb-6">
+          <GlobalFilters
             selectedTimeRange={selectedTimeRange}
             setSelectedTimeRange={setSelectedTimeRange}
-            selectedPaymentMethod={selectedPaymentMethod}
-            setSelectedPaymentMethod={setSelectedPaymentMethod}
+            selectedUserJourney={selectedUserJourney}
+            setSelectedUserJourney={setSelectedUserJourney}
+            selectedCountries={selectedCountries}
+            setSelectedCountries={setSelectedCountries}
+            compareWithPrevious={compareWithPrevious}
+            setCompareWithPrevious={setCompareWithPrevious}
           />
-
-          <DashboardStats selectedTimeRange={selectedTimeRange} />
-
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            <PaymentMethodBreakdown />
-            <AcceptanceRates />
-          </div>
-
-          <ConversionFunnel selectedPaymentMethod={selectedPaymentMethod} />
         </div>
+
+        {/* Tab Navigation */}
+        <Tabs defaultValue="executive" className="space-y-6">
+          <TabsList className="grid w-full grid-cols-4">
+            <TabsTrigger value="executive">Executive Overview</TabsTrigger>
+            <TabsTrigger value="performance">Payment Method Performance</TabsTrigger>
+            <TabsTrigger value="analysis">Decline & Failure Analysis</TabsTrigger>
+            <TabsTrigger value="behavior">User Behaviour Analysis</TabsTrigger>
+          </TabsList>
+
+          {/* Executive Overview Tab */}
+          <TabsContent value="executive" className="space-y-6">
+            <KPIScoreCards compareWithPrevious={compareWithPrevious} />
+            
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <PerformanceTrends />
+              <PaymentMethodPopularity />
+            </div>
+            
+            <TopDeclineReasons />
+          </TabsContent>
+
+          {/* Payment Method Performance Tab */}
+          <TabsContent value="performance" className="space-y-6">
+            <PerformanceMatrix />
+            {/* Additional performance components will be added here */}
+          </TabsContent>
+
+          {/* Decline & Failure Analysis Tab */}
+          <TabsContent value="analysis" className="space-y-6">
+            <div className="text-center py-12">
+              <h3 className="text-lg font-semibold text-foreground mb-2">Decline & Failure Analysis</h3>
+              <p className="text-muted-foreground">Comprehensive failure analysis coming soon...</p>
+            </div>
+          </TabsContent>
+
+          {/* User Behaviour Analysis Tab */}
+          <TabsContent value="behavior" className="space-y-6">
+            <div className="text-center py-12">
+              <h3 className="text-lg font-semibold text-foreground mb-2">User Behaviour Analysis</h3>
+              <p className="text-muted-foreground">User segmentation and behavior insights coming soon...</p>
+            </div>
+          </TabsContent>
+        </Tabs>
       </div>
     </div>
   );
