@@ -7,13 +7,18 @@ import PerformanceTrends from "@/components/executive/PerformanceTrends";
 import PaymentMethodPopularity from "@/components/executive/PaymentMethodPopularity";
 import TopDeclineReasons from "@/components/executive/TopDeclineReasons";
 import PerformanceMatrix from "@/components/performance/PerformanceMatrix";
+import DeclineReasonsChart from "@/components/analysis/DeclineReasonsChart";
+import FailuresTimeline from "@/components/analysis/FailuresTimeline";
+import DetailedFailuresLog from "@/components/analysis/DetailedFailuresLog";
+import PaymentMethodBySegment from "@/components/behavior/PaymentMethodBySegment";
+import AOVBySegment from "@/components/behavior/AOVBySegment";
+import CountryPaymentHeatmap from "@/components/behavior/CountryPaymentHeatmap";
 import { BarChart3 } from "lucide-react";
 
 const Index = () => {
   // Global filter states
   const [selectedTimeRange, setSelectedTimeRange] = useState("30d");
   const [selectedUserJourney, setSelectedUserJourney] = useState("all");
-  const [selectedCountries, setSelectedCountries] = useState(["all"]);
   const [compareWithPrevious, setCompareWithPrevious] = useState(false);
 
   return (
@@ -37,8 +42,6 @@ const Index = () => {
             setSelectedTimeRange={setSelectedTimeRange}
             selectedUserJourney={selectedUserJourney}
             setSelectedUserJourney={setSelectedUserJourney}
-            selectedCountries={selectedCountries}
-            setSelectedCountries={setSelectedCountries}
             compareWithPrevious={compareWithPrevious}
             setCompareWithPrevious={setCompareWithPrevious}
           />
@@ -68,23 +71,24 @@ const Index = () => {
           {/* Payment Method Performance Tab */}
           <TabsContent value="performance" className="space-y-6">
             <PerformanceMatrix />
-            {/* Additional performance components will be added here */}
           </TabsContent>
 
           {/* Decline & Failure Analysis Tab */}
           <TabsContent value="analysis" className="space-y-6">
-            <div className="text-center py-12">
-              <h3 className="text-lg font-semibold text-foreground mb-2">Decline & Failure Analysis</h3>
-              <p className="text-muted-foreground">Comprehensive failure analysis coming soon...</p>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <DeclineReasonsChart />
+              <FailuresTimeline />
             </div>
+            <DetailedFailuresLog />
           </TabsContent>
 
           {/* User Behaviour Analysis Tab */}
           <TabsContent value="behavior" className="space-y-6">
-            <div className="text-center py-12">
-              <h3 className="text-lg font-semibold text-foreground mb-2">User Behaviour Analysis</h3>
-              <p className="text-muted-foreground">User segmentation and behavior insights coming soon...</p>
+            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
+              <PaymentMethodBySegment />
+              <AOVBySegment />
             </div>
+            <CountryPaymentHeatmap />
           </TabsContent>
         </Tabs>
       </div>

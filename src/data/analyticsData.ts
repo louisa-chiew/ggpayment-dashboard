@@ -3,6 +3,7 @@
 export interface KPIMetrics {
   totalPaymentVolume: number;
   overallSuccessRate: number;
+  netSuccessRate: number;
   successfulTransactions: number;
   netSuccessfulTransactions: number;
   averageOrderValue: number;
@@ -43,10 +44,23 @@ export interface GeographicData {
   topPaymentMethod: string;
 }
 
+export interface FailureLogEntry {
+  timestamp: string;
+  amount: number;
+  paymentMethod: string;
+  declineReason: string;
+  device: string;
+  userType: string;
+  issuingBank: string;
+  threeDSecureStatus: string;
+  transactionId: string;
+}
+
 // Mock data for analytics dashboard
 export const kpiMetrics: KPIMetrics = {
   totalPaymentVolume: 2450750,
   overallSuccessRate: 89.4,
+  netSuccessRate: 86.7, // After accounting for refunds and chargebacks
   successfulTransactions: 42850,
   netSuccessfulTransactions: 41230,
   averageOrderValue: 57.23,
@@ -178,6 +192,42 @@ export const geographicData: GeographicData[] = [
   { country: "Australia", tpv: 145000, successRate: 88.7, topPaymentMethod: "Visa" }
 ];
 
+export const failureLogData: FailureLogEntry[] = [
+  {
+    timestamp: "2024-01-15 14:23:45",
+    amount: 45.99,
+    paymentMethod: "Visa",
+    declineReason: "Insufficient Funds",
+    device: "Mobile",
+    userType: "Returning",
+    issuingBank: "Barclays",
+    threeDSecureStatus: "Not Attempted",
+    transactionId: "TXN-2024-001"
+  },
+  {
+    timestamp: "2024-01-15 14:21:12",
+    amount: 89.50,
+    paymentMethod: "Mastercard",
+    declineReason: "3D Secure Failed",
+    device: "Desktop",
+    userType: "New",
+    issuingBank: "HSBC",
+    threeDSecureStatus: "Failed",
+    transactionId: "TXN-2024-002"
+  },
+  {
+    timestamp: "2024-01-15 14:18:33",
+    amount: 23.75,
+    paymentMethod: "Apple Pay",
+    declineReason: "Do Not Honour",
+    device: "Mobile",
+    userType: "Returning",
+    issuingBank: "Santander",
+    threeDSecureStatus: "Not Required",
+    transactionId: "TXN-2024-003"
+  }
+];
+
 export const timeRangeOptions = [
   { value: "today", label: "Today" },
   { value: "7d", label: "Last 7 Days" },
@@ -188,19 +238,12 @@ export const timeRangeOptions = [
 
 export const userJourneyOptions = [
   { value: "all", label: "All Journeys" },
-  { value: "initial_checkout", label: "Initial Checkout" },
-  { value: "subscription_renewal", label: "Subscription Renewal" },
-  { value: "invoice_payment", label: "Invoice Payment" }
-];
-
-export const countryOptions = [
-  { value: "all", label: "All Countries" },
-  { value: "uk", label: "United Kingdom" },
-  { value: "us", label: "United States" },
-  { value: "de", label: "Germany" },
-  { value: "fr", label: "France" },
-  { value: "ca", label: "Canada" },
-  { value: "au", label: "Australia" }
+  { value: "sim_activation", label: "SIM Activation" },
+  { value: "buy_airtime", label: "Buy Airtime" },
+  { value: "phone_outright", label: "Phone Outright" },
+  { value: "phone_loans", label: "Phone Loans" },
+  { value: "broadband", label: "Broadband" },
+  { value: "phone_outright_new", label: "Phone Outright (New)" }
 ];
 
 // Time series data for trends
@@ -212,4 +255,30 @@ export const performanceTrends = [
   { date: "2024-01-05", tpv: 220000, successRate: 91.2 },
   { date: "2024-01-06", tpv: 235000, successRate: 90.5 },
   { date: "2024-01-07", tpv: 198000, successRate: 89.9 }
+];
+
+export const failuresOverTime = [
+  { date: "2024-01-01", "Insufficient Funds": 45, "3D Secure Failed": 32, "Do Not Honour": 18, "Other": 25 },
+  { date: "2024-01-02", "Insufficient Funds": 52, "3D Secure Failed": 28, "Do Not Honour": 22, "Other": 30 },
+  { date: "2024-01-03", "Insufficient Funds": 38, "3D Secure Failed": 35, "Do Not Honour": 15, "Other": 22 },
+  { date: "2024-01-04", "Insufficient Funds": 41, "3D Secure Failed": 29, "Do Not Honour": 19, "Other": 28 },
+  { date: "2024-01-05", "Insufficient Funds": 48, "3D Secure Failed": 33, "Do Not Honour": 21, "Other": 32 },
+  { date: "2024-01-06", "Insufficient Funds": 55, "3D Secure Failed": 31, "Do Not Honour": 24, "Other": 35 },
+  { date: "2024-01-07", "Insufficient Funds": 43, "3D Secure Failed": 27, "Do Not Honour": 17, "Other": 26 }
+];
+
+export const segmentAOVData = [
+  { segment: "New Users", aov: 52.30, desktop: 58.45, mobile: 46.15 },
+  { segment: "Returning Users", aov: 68.90, desktop: 74.20, mobile: 63.60 },
+  { segment: "Desktop Users", aov: 74.50, desktop: 74.50, mobile: 0 },
+  { segment: "Mobile Users", aov: 49.80, desktop: 0, mobile: 49.80 }
+];
+
+export const countryPaymentHeatmap = [
+  { country: "UK", "Visa": 45, "PayPal": 25, "Apple Pay": 20, "Mastercard": 8, "Google Pay": 2 },
+  { country: "US", "Visa": 35, "PayPal": 15, "Apple Pay": 35, "Mastercard": 10, "Google Pay": 5 },
+  { country: "Germany", "Visa": 30, "PayPal": 40, "Apple Pay": 15, "Mastercard": 12, "Google Pay": 3 },
+  { country: "France", "Visa": 42, "PayPal": 20, "Apple Pay": 18, "Mastercard": 15, "Google Pay": 5 },
+  { country: "Canada", "Visa": 38, "PayPal": 18, "Apple Pay": 28, "Mastercard": 12, "Google Pay": 4 },
+  { country: "Australia", "Visa": 40, "PayPal": 22, "Apple Pay": 25, "Mastercard": 10, "Google Pay": 3 }
 ];
