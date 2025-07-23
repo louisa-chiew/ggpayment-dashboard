@@ -274,11 +274,67 @@ export const segmentAOVData = [
   { segment: "Mobile Users", aov: 49.80, desktop: 0, mobile: 49.80 }
 ];
 
-export const countryPaymentHeatmap = [
-  { country: "UK", "Visa": 45, "PayPal": 25, "Apple Pay": 20, "Mastercard": 8, "Google Pay": 2 },
-  { country: "US", "Visa": 35, "PayPal": 15, "Apple Pay": 35, "Mastercard": 10, "Google Pay": 5 },
-  { country: "Germany", "Visa": 30, "PayPal": 40, "Apple Pay": 15, "Mastercard": 12, "Google Pay": 3 },
-  { country: "France", "Visa": 42, "PayPal": 20, "Apple Pay": 18, "Mastercard": 15, "Google Pay": 5 },
-  { country: "Canada", "Visa": 38, "PayPal": 18, "Apple Pay": 28, "Mastercard": 12, "Google Pay": 4 },
-  { country: "Australia", "Visa": 40, "PayPal": 22, "Apple Pay": 25, "Mastercard": 10, "Google Pay": 3 }
+export interface ConversionFunnelStep {
+  step: string;
+  userCount: number;
+  conversionFromPrevious?: string;
+  dropoffCount?: number;
+  dropoffRate?: string;
+  overallConversion: string;
+  isBranch?: boolean;
+}
+
+export const conversionFunnelData: ConversionFunnelStep[] = [
+  {
+    step: "1. Checkout Initiated",
+    userCount: 10000,
+    overallConversion: "100%"
+  },
+  {
+    step: "2. Payment Page Loaded",
+    userCount: 9800,
+    conversionFromPrevious: "98.0%",
+    dropoffCount: 200,
+    dropoffRate: "2.0%",
+    overallConversion: "98.0%"
+  },
+  {
+    step: "3. Payment Submitted",
+    userCount: 9000,
+    conversionFromPrevious: "91.8%",
+    dropoffCount: 800,
+    dropoffRate: "8.2%",
+    overallConversion: "90.0%"
+  },
+  {
+    step: "Branch: 3DS Triggered",
+    userCount: 6000,
+    conversionFromPrevious: "66.7%",
+    overallConversion: "60.0%",
+    isBranch: true
+  },
+  {
+    step: "- 3DS Success",
+    userCount: 5400,
+    conversionFromPrevious: "90.0%",
+    dropoffCount: 600,
+    dropoffRate: "10.0%",
+    overallConversion: "54.0%",
+    isBranch: true
+  },
+  {
+    step: "Branch: 3DS Not Req.",
+    userCount: 3000,
+    conversionFromPrevious: "33.3%",
+    overallConversion: "30.0%",
+    isBranch: true
+  },
+  {
+    step: "4. Transaction Successful",
+    userCount: 8400,
+    conversionFromPrevious: "93.3%",
+    dropoffCount: 600,
+    dropoffRate: "6.7%",
+    overallConversion: "84.0%"
+  }
 ];

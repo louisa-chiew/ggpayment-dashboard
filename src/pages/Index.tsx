@@ -12,7 +12,7 @@ import FailuresTimeline from "@/components/analysis/FailuresTimeline";
 import DetailedFailuresLog from "@/components/analysis/DetailedFailuresLog";
 import PaymentMethodBySegment from "@/components/behavior/PaymentMethodBySegment";
 import AOVBySegment from "@/components/behavior/AOVBySegment";
-import CountryPaymentHeatmap from "@/components/behavior/CountryPaymentHeatmap";
+import ConversionFunnel from "@/components/behavior/ConversionFunnel";
 import { BarChart3 } from "lucide-react";
 
 const Index = () => {
@@ -88,7 +88,7 @@ const Index = () => {
               <PaymentMethodBySegment />
               <AOVBySegment />
             </div>
-            <CountryPaymentHeatmap />
+            <ConversionFunnel />
           </TabsContent>
         </Tabs>
       </div>
