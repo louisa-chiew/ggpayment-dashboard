@@ -9,7 +9,16 @@ import { useState } from "react";
 const PerformanceMatrix = () => {
   const [sortConfig, setSortConfig] = useState<{ key: string; direction: 'asc' | 'desc' } | null>(null);
 
-  const sortedData = [...paymentMethodPerformance].sort((a, b) => {
+  // Calculate total attempts for adoption percentage
+  const totalAttempts = paymentMethodPerformance.reduce((sum, method) => sum + method.totalAttempts, 0);
+  
+  // Add adoption percentage to data
+  const dataWithAdoption = paymentMethodPerformance.map(method => ({
+    ...method,
+    adoptionRate: (method.totalAttempts / totalAttempts) * 100
+  }));
+
+  const sortedData = [...dataWithAdoption].sort((a, b) => {
     if (!sortConfig) return 0;
     
     const aValue = a[sortConfig.key as keyof typeof a];
@@ -56,6 +65,11 @@ const PerformanceMatrix = () => {
                     AOV (£) <ArrowUpDown className="ml-2 h-4 w-4" />
                   </Button>
                 </TableHead>
+                <TableHead className="text-right">
+                  <Button variant="ghost" size="sm" onClick={() => handleSort('adoptionRate')}>
+                    Adoption (%) <ArrowUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </TableHead>
                 <TableHead className="text-right">Total Attempts</TableHead>
                 <TableHead className="text-right">Successful</TableHead>
                 <TableHead className="text-right">Failed</TableHead>
@@ -74,6 +88,7 @@ const PerformanceMatrix = () => {
                   </TableCell>
                   <TableCell className="text-right">£{method.tpv.toLocaleString()}</TableCell>
                   <TableCell className="text-right">£{method.aov}</TableCell>
+                  <TableCell className="text-right font-medium">{method.adoptionRate.toFixed(1)}%</TableCell>
                   <TableCell className="text-right">{method.totalAttempts.toLocaleString()}</TableCell>
                   <TableCell className="text-right text-success">{method.successful.toLocaleString()}</TableCell>
                   <TableCell className="text-right text-error">{method.failed.toLocaleString()}</TableCell>
