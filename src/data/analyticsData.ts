@@ -4,6 +4,7 @@ export interface KPIMetrics {
   totalPaymentVolume: number;
   overallSuccessRate: number;
   netSuccessRate: number;
+  authorizationRate: number;
   successfulTransactions: number;
   netSuccessfulTransactions: number;
   averageOrderValue: number;
@@ -14,6 +15,7 @@ export interface KPIMetrics {
 export interface PaymentMethodPerformance {
   method: string;
   successRate: number;
+  authorizationRate: number;
   tpv: number;
   aov: number;
   totalAttempts: number;
@@ -61,6 +63,7 @@ export const kpiMetrics: KPIMetrics = {
   totalPaymentVolume: 2450750,
   overallSuccessRate: 89.4,
   netSuccessRate: 86.7, // After accounting for refunds and chargebacks
+  authorizationRate: 94.2,
   successfulTransactions: 42850,
   netSuccessfulTransactions: 41230,
   averageOrderValue: 57.23,
@@ -72,6 +75,7 @@ export const paymentMethodPerformance: PaymentMethodPerformance[] = [
   {
     method: "Visa",
     successRate: 92.5,
+    authorizationRate: 95.8,
     tpv: 1250400,
     aov: 85.30,
     totalAttempts: 16923,
@@ -83,6 +87,7 @@ export const paymentMethodPerformance: PaymentMethodPerformance[] = [
   {
     method: "PayPal",
     successRate: 96.1,
+    authorizationRate: 98.2,
     tpv: 850200,
     aov: 72.40,
     totalAttempts: 12015,
@@ -94,6 +99,7 @@ export const paymentMethodPerformance: PaymentMethodPerformance[] = [
   {
     method: "Apple Pay",
     successRate: 97.3,
+    authorizationRate: 98.9,
     tpv: 620150,
     aov: 65.10,
     totalAttempts: 9603,
@@ -105,6 +111,7 @@ export const paymentMethodPerformance: PaymentMethodPerformance[] = [
   {
     method: "Mastercard",
     successRate: 91.8,
+    authorizationRate: 94.5,
     tpv: 445320,
     aov: 78.90,
     totalAttempts: 5920,
@@ -116,6 +123,7 @@ export const paymentMethodPerformance: PaymentMethodPerformance[] = [
   {
     method: "Google Pay",
     successRate: 95.2,
+    authorizationRate: 97.8,
     tpv: 284680,
     aov: 68.40,
     totalAttempts: 4380,

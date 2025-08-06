@@ -18,6 +18,15 @@ const KPIScoreCards = ({ compareWithPrevious }: KPIScoreCardsProps) => {
       isPrimary: true,
     },
     {
+      title: "Authorization Rate",
+      value: `${kpiMetrics.authorizationRate}%`,
+      icon: TrendingUp,
+      trend: "+2.1%",
+      trendUp: true,
+      subtitle: "Payment gateway approval",
+      isPrimary: true,
+    },
+    {
       title: "Net Success Rate",
       value: `${kpiMetrics.netSuccessRate}%`,
       icon: TrendingUp,

@@ -56,6 +56,11 @@ const PerformanceMatrix = () => {
                   </Button>
                 </TableHead>
                 <TableHead className="text-right">
+                  <Button variant="ghost" size="sm" onClick={() => handleSort('authorizationRate')}>
+                    Auth Rate <ArrowUpDown className="ml-2 h-4 w-4" />
+                  </Button>
+                </TableHead>
+                <TableHead className="text-right">
                   <Button variant="ghost" size="sm" onClick={() => handleSort('tpv')}>
                     TPV (£) <ArrowUpDown className="ml-2 h-4 w-4" />
                   </Button>
@@ -84,6 +89,11 @@ const PerformanceMatrix = () => {
                   <TableCell className="text-right">
                     <span className={`font-medium ${method.successRate >= 95 ? 'text-success' : method.successRate >= 90 ? 'text-warning' : 'text-error'}`}>
                       {method.successRate}%
+                    </span>
+                  </TableCell>
+                  <TableCell className="text-right">
+                    <span className={`font-medium ${method.authorizationRate >= 95 ? 'text-success' : method.authorizationRate >= 90 ? 'text-warning' : 'text-error'}`}>
+                      {method.authorizationRate}%
                     </span>
                   </TableCell>
                   <TableCell className="text-right">£{method.tpv.toLocaleString()}</TableCell>

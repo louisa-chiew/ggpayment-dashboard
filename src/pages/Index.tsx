@@ -9,7 +9,6 @@ import TopDeclineReasons from "@/components/executive/TopDeclineReasons";
 import PerformanceMatrix from "@/components/performance/PerformanceMatrix";
 import DeclineReasonsChart from "@/components/analysis/DeclineReasonsChart";
 import FailuresTimeline from "@/components/analysis/FailuresTimeline";
-import DetailedFailuresLog from "@/components/analysis/DetailedFailuresLog";
 import PaymentMethodBySegment from "@/components/behavior/PaymentMethodBySegment";
 import AOVBySegment from "@/components/behavior/AOVBySegment";
 import ConversionFunnel from "@/components/behavior/ConversionFunnel";
@@ -59,35 +58,28 @@ const Index = () => {
           {/* Executive Overview Tab */}
           <TabsContent value="executive" className="space-y-6">
             <KPIScoreCards compareWithPrevious={compareWithPrevious} />
-            
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <PerformanceTrends />
+            <PerformanceTrends />
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               <PaymentMethodPopularity />
+              <TopDeclineReasons />
             </div>
-            
-            <TopDeclineReasons />
           </TabsContent>
 
           {/* Payment Method Performance Tab */}
-          <TabsContent value="performance" className="space-y-6">
-            <PerformanceMatrix />
-          </TabsContent>
+        <TabsContent value="performance" className="space-y-6">
+          <PerformanceMatrix />
+          <PaymentMethodBySegment />
+        </TabsContent>
 
           {/* Decline & Failure Analysis Tab */}
           <TabsContent value="analysis" className="space-y-6">
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <DeclineReasonsChart />
-              <FailuresTimeline />
-            </div>
-            <DetailedFailuresLog />
+            <DeclineReasonsChart />
+            <FailuresTimeline />
           </TabsContent>
 
           {/* User Behaviour Analysis Tab */}
           <TabsContent value="behavior" className="space-y-6">
-            <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-              <PaymentMethodBySegment />
-              <AOVBySegment />
-            </div>
+            <AOVBySegment />
             <ConversionFunnel />
           </TabsContent>
         </Tabs>
